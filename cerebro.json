@@ -1,0 +1,34 @@
+{
+  "registro_mestre": {
+    "ultima_atualizacao": "2026-01-31T14:30:00Z",
+    "ciclos_de_aprendizado": 0
+  },
+  
+  "memoria_episodica": {
+    "historico_dialogos": [],
+    "decisoes_criticas": [],
+    "fatos_aprendidos": [
+      { "sujeito": "Reginaldo", "relacao": "criador", "afinidade": 100 }
+    ]
+  },
+  
+  "memoria_semantica": {
+    "status_yumi": {
+      "dinheiro": 0,
+      "energia": 100,
+      "inteligencia": 10,
+      "trauma": 0,
+      "roupa_atual": "escolar"
+    },
+    "relacionamentos": {
+      "mae": 10,
+      "mike": 0,
+      "jim": 0
+    }
+  },
+  
+  "evolucao_ia": {
+    "novos_gatilhos_gerados": {},
+    "preferencias_do_usuario": []
+  }
+}
