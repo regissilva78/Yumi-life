@@ -1,32 +1,50 @@
 {
-  "tutorial": "MAPEAMENTO VISUAL EVOLUTIVO: Relaciona a 'Ação' do NPC com a 'Imagem' real.",
-  "npc": {
-    "mike_fuma": "https://media.tenor.com/7D2x0d_zZcAAAAAC/anime-smoke.gif",
-    "mike_sorri": "https://media.tenor.com/S-JmI9d0sZAAAAAC/anime-stare.gif",
-    "mike_bravo": "https://media.tenor.com/2_-_j-6CoYAAAAC/anime-angry.gif",
-    "mike_proposta_gif": "https://media.tenor.com/S-JmI9d0sZAAAAAC/anime-stare.gif",
-    "mike_vitoria_gif": "https://media.tenor.com/S-JmI9d0sZAAAAAC/anime-stare.gif",
-    "mike_derrota_gif": "https://media.tenor.com/2_-_j-6CoYAAAAC/anime-angry.gif",
-    "mike_prenda1_pes_gif": "https://media.tenor.com/w9i6s-82a9sAAAAC/anime-couple.gif",
-    "mike_prenda2_colo_gif": "https://media.tenor.com/w9i6s-82a9sAAAAC/anime-couple.gif",
-    "mike_prenda3_sapato_gif": "https://media.tenor.com/5u_m9__W5_gAAAAC/anime-cry.gif",
-    "mike_prenda_lamber": "https://media.tenor.com/5u_m9__W5_gAAAAC/anime-cry.gif",
-    "mike_prenda_exibir": "https://media.tenor.com/images/33423758362635326/anime-blush.gif",
-    "jim_joga": "https://media.tenor.com/E1tXzW1cE6kAAAAC/anime-gamer.gif",
-    "jim_sorri": "https://media.tenor.com/E1tXzW1cE6kAAAAC/anime-creepy-smile.gif",
-    "julio_sorri": "https://media.tenor.com/MF1sPkC2gQAAAAAC/anime-boy-smile.gif"
+  "tutorial": "MECÂNICA EVOLUTIVA: Controla falas, efeitos financeiros e mudanças de status.",
+  "fluxos": {
+    "mae_root": {
+      "id": "mae_root",
+      "speaker": "MÃE",
+      "text": "Sua mãe está organizando as coisas na cozinha. Ela parece um pouco cansada devido à chuva em Santa Isabel.",
+      "reacao": "yumi_idle",
+      "options": [
+        { "txt": "Oferecer ajuda", "nextId": "mae_help", "eff": [{"type": "stat", "key": "confianca", "op": "add", "val": 1}] },
+        { "txt": "Pedir dinheiro", "nextId": "mae_money", "req": [{"type": "stat", "key": "confianca", "op": ">", "val": 10}] },
+        { "txt": "Sair", "isExit": true }
+      ]
+    },
+    "mae_help": {
+      "id": "mae_help",
+      "speaker": "MÃE",
+      "text": "Ela sorri gentilmente. 'Obrigada, querida. Pode secar a louça para mim?'.",
+      "reacao": "yumi_idle",
+      "options": [
+        { "txt": "Secar louça", "eff": [{"type": "stat", "key": "energia", "op": "add", "val": -5}], "msg": "Você ajudou sua mãe e ganhou pontos de confiança.", "isExit": true }
+      ]
+    },
+    "mike_encontro": {
+      "id": "mike_encontro",
+      "speaker": "MIKE",
+      "text": "'Ora, ora... se não é a Yumi. O que uma garota como você faz por aqui com esse tempo?'. Mike solta uma fumaça densa.",
+      "reacao": "mike_fuma",
+      "options": [
+        { "txt": "Ignorar e passar", "isExit": true },
+        { "txt": "Ouvir a proposta dele", "nextId": "mike_proposta" }
+      ]
+    },
+    "mike_proposta": {
+      "id": "mike_proposta",
+      "speaker": "MIKE",
+      "text": "'Tenho um jogo para você. Se vencer, ganha ¥500. Se perder... bem, você paga uma prenda.'",
+      "reacao": "mike_proposta_gif",
+      "options": [
+        { "txt": "Aceitar desafio", "nextId": "dados_game" },
+        { "txt": "Recusar", "isExit": true }
+      ]
+    }
   },
-  "yumi": {
-    "yumi_idle": "https://media.tenor.com/aJj2p5Wk5xAAAAAC/anime-school-girl.gif",
-    "vergonha": "https://media.tenor.com/images/33423758362635326/anime-blush.gif",
-    "pensativa": "https://media.tenor.com/m-bT-3c-JzYAAAAC/anime-thinking.gif",
-    "estudando": "https://media.tenor.com/29w_p8u6R-UAAAAC/anime-study.gif"
-  },
-  "efeitos": {
-    "dados_rolando": "https://media.tenor.com/E1tXzW1cE6kAAAAC/anime-cards.gif"
-  },
-  "ia_generativa": {
-    "url_base": "https://image.pollinations.ai/prompt/",
-    "config": "photorealistic, 8k, anime style, highly detailed"
+  "config_evolutiva": {
+    "memoria_recente": [],
+    "humor_yumi": "neutro",
+    "estilo_atual": "escolar"
   }
 }
