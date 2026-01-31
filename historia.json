@@ -1,0 +1,85 @@
+/* ==========================================================================
+   TUTORIAL: O ROBÔ EVOLUTIVO (SISTEMA NERVOSO)
+   ==========================================================================
+   1. MEMÓRIA LOCAL: Usa o 'LocalStorage' do navegador (grátis e eterno).
+   2. VISÃO COMPUTACIONAL: O robô checa os 'status' antes de falar.
+   3. PONTE HÍBRIDA: Ele decide se usa a IA local ou a IA da Nuvem.
+   ==========================================================================
+*/
+
+const RoboYumi = {
+    config: {},
+    memoria: JSON.parse(localStorage.getItem('yumi_memoria')) || [],
+    
+    // 1. INICIALIZAÇÃO (O robô acorda e 'escaneia' o hospedeiro)
+    async iniciar() {
+        console.log("Robô Yumi: Analisando recursos do hospedeiro...");
+        try {
+            const resposta = await fetch('historia.json');
+            this.config = await resposta.json();
+            this.renderizarCena();
+        } catch (erro) {
+            console.error("Erro ao carregar cérebro inicial:", erro);
+        }
+    },
+
+    // 2. A 'VISÃO' (Entende o contexto e a roupa)
+    analisarContexto() {
+        const vestimenta = this.config.yumi_perfil.status.estilo;
+        const clima = this.config.estado_mundo.clima;
+        
+        // O robô 'enxerga' se a Yumi está adequada ao clima
+        if (clima.includes("chuvoso") && vestimenta === "escolar_verao") {
+            return "Yumi parece preocupada em se molhar com essa roupa.";
+        }
+        return "Tudo parece normal no ambiente.";
+    },
+
+    // 3. O 'OUVIDO' E 'BOCA' (Processa o diálogo)
+    async processarEscolha(indiceOpcao) {
+        // Guarda na memória o que foi feito (Evolução)
+        const escolhaLog = {
+            data: new Date().toISOString(),
+            escolha: indiceOpcao,
+            contexto: this.analisarContexto()
+        };
+        this.memoria.push(escolhaLog);
+        this.salvarMemoria();
+
+        // Aqui o robô decide: "Preciso da IA do Google Cloud ou eu mesmo resolvo?"
+        if (this.memoria.length % 5 === 0) { 
+            // A cada 5 interações, ele 'evolui' chamando a IA potente
+            this.chamarIAExterna("Gere um novo desdobramento baseado em: " + JSON.stringify(this.memoria));
+        } else {
+            // Lógica local rápida para não gastar processamento
+            this.proximoPassoLocal();
+        }
+    },
+
+    // 4. SALVAR PROGRESSO (Memória de longo prazo no dispositivo)
+    salvarMemoria() {
+        localStorage.setItem('yumi_memoria', JSON.stringify(this.memoria));
+    },
+
+    // 5. RENDERIZAÇÃO (Ação e Imagem)
+    renderizarCena() {
+        const nomeElemento = document.getElementById('nome-exibido');
+        const textoElemento = document.getElementById('texto-principal');
+        const imagemNpc = document.getElementById('render-personagem');
+
+        nomeElemento.innerText = this.config.npcs[0].nome;
+        textoElemento.innerText = "Olá Reginaldo! " + this.analisarContexto();
+        
+        // Busca imagem no banco de dados local (Assets)
+        imagemNpc.src = "https://via.placeholder.com/400x600?text=Yumi_Feliz"; // Placeholder
+        imagemNpc.setAttribute('data-reacao', 'feliz');
+    },
+
+    async chamarIAExterna(prompt) {
+        console.log("Conectando ao Llama 3 no Google Cloud para evolução...");
+        // Aqui entra o código que se conecta à sua VM quando ela estiver ligada
+    }
+};
+
+// Iniciar o robô quando a página carregar
+window.onload = () => RoboYumi.iniciar();
